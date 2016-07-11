@@ -1,0 +1,24 @@
+{
+  "name": "fans",
+  "version": "1.0.0",
+  "description": "express test",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jinyuyoulong/NodejsLearned.git"
+  },
+  "author": "fans",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jinyuyoulong/NodejsLearned/issues"
+  },
+  "homepage": "https://github.com/jinyuyoulong/NodejsLearned#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "multer": "^1.1.0"
+  }
+}
