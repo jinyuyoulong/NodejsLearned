@@ -19,6 +19,7 @@ var user = {
       "id": 4
    }
 }
+
 app.get('/addUser', function (req, res) {
 	fs.readFile(__dirname + '/' + 'users.json', 'utf8', function (err, data) {
 		data = JSON.parse(data)
@@ -38,13 +39,36 @@ app.get('/addUser', function (req, res) {
 	})
 })
 
-// 
+// 显示用户详情
 app.get('/:id', function (req, res) {
+	// // 首先我们读取已存在的用户
 	fs.readFile(__dirname + '/' + 'users.json', function (err, data) {
 		data = JSON.parse(data)
-		
+		var user = data["user"+ req.params.id] // key值 字符串拼接
+		console.log(user)
+		res.end(JSON.stringify(user))
 	})
 })
+
+// delete 删除用户 另起文件，此文件下不能访问到资源
+var id = 2;
+/*
+app.get('/deleteUser', function (req, res) {
+	// First read existing users.
+	fs.readFile(__dirname + '/' + 'users.json', 'utf8', function (err, data) {
+
+		data = JSON.parse(data)
+		delete data["user"+2]
+
+		console.log(data)
+		res.end(JSON.stringify(data))
+	})
+})
+*/
+
+
+
+
 var server = app.listen(8081, function () {
 	var host = server.address().address
 	var port = server.address().port
