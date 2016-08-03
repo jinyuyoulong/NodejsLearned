@@ -1,0 +1,30 @@
+{
+  "name": "nodejs_learned",
+  "version": "1.0.0",
+  "description": "my nodejs study way",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.14.0",
+    "mongodb": "^2.2.2",
+    "superagent": "^2.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "make test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jinyuyoulong/NodejsLearned.git"
+  },
+  "keywords": [
+    "nodejs",
+    "simple"
+  ],
+  "author": "fans",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jinyuyoulong/NodejsLearned/issues"
+  },
+  "homepage": "https://github.com/jinyuyoulong/NodejsLearned#readme"
+}
