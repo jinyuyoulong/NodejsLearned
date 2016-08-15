@@ -14,9 +14,9 @@ http.createServer(function (request, response) {
 	fs.readFile(pathname.substr(1), function (err, data) {
 		if (err) {
 			return console.log(err)
-		// 	HTTP 状态吗 ：404 : NOT FOUND
-		// Content-Type : text/plain
-		response.writeHead(404, {'Content-Type': 'text/html'})
+			// 	HTTP 状态吗 ：404 : NOT FOUND
+			// Content-Type : text/plain
+			response.writeHead(404, {'Content-Type': 'text/html'})
 		}else{
 			// HTTP 状态吗 ：200 : OK
 			// Content-Type : text/plain
