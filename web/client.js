@@ -17,6 +17,7 @@ var callback = function (response) {
 
 	response.on('end', function () {
 		//更新数据完成
+		console.log("response end")
 		console.log(body)
 	})
 }
