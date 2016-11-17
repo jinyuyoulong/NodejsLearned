@@ -4,6 +4,7 @@
   "description": "my nodejs study way",
   "main": "index.js",
   "dependencies": {
+    "eventproxy": "^0.3.5",
     "express": "^4.14.0",
     "mongodb": "^2.2.2",
     "superagent": "^2.1.0"
