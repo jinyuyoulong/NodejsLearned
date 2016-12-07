@@ -20,7 +20,7 @@ var ep = new eventproxy(),
               // 剩下就都是利用$ 使用 jquery 的语法了
               var $ = cheerio.load(pres.text)
               var title = $('.BookTitle')
-              
+              console.log(title)
 			})
 		})
 		response.write("<br/>")
