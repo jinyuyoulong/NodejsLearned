@@ -1,37 +1,125 @@
-var superagent =  require('superagent')
-var express = require('express')
-var app = express()
-var cheerio = require('cheerio')
-var http = require('http')
+var cheerio    = require('cheerio'),  // 爬内容
 
-app.listen(3000, function () {
-  console.log('node js listen 3000 , server star!')
-})
+    // CronJob    = require('cron').CronJob, // 定时任务
+    // nodemailer = require('nodemailer'), // 发邮件
+    async      = require('async'),  // 做流程控制
+    request    = require('request'),   //  取网页
+    gbk        = require('gbk')   // 转编码
 
-app.get('/', function (req, res, next) {
-  // 用 superagent 去抓取 https://cnodejs.org/ 的内容
-  superagent.get('https://cnodejs.org/')
-    .end(function (err, sres) {
-      // 常规的错误处理
-      if (err) {
-        return next(err);
-      }
-      // console.log('#############')
-      // console.log(sres.text)
-      // console.log('#############')
-      // sres.text 里面存储着网页的 html 内容，将它传给 cheerio.load 之后
-      // 就可以得到一个实现了 jquery 接口的变量，我们习惯性地将它命名为 `$`
-      // 剩下就都是 jquery 的内容了
-      var $ = cheerio.load(sres.text);
-      var items = [];
-      $('#topic_list .topic_title').each(function (idx, element) {
-        var $element = $(element);
-        items.push({
-          title: $element.attr('title'),
-          href: $element.attr('href')
-        });
-      });
 
-      res.send(items);
-    });
-});
+ function getHTML(next) {
+    var options = {
+        url: 'http://kaijiang.500.com/dlt.shtml',  
+        encoding: null
+    }
+    request(options, function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+            next(null, body)
+          }
+    })
+}
+function parser(body,next) { 
+    var result = gbk.toString('utf-8', body)
+    next(null, result)
+}
+function getResult(html,next) {
+     var $ = cheerio.load(html,{decodeEntities: false})
+     var table = $('table.kj_tablelist02')
+     var series = $('.span_left',table).text()
+     var number = $('.ball_box01 ul', table).text()
+         number = number.replace(/\s+/g, ' ')
+     next(null, {series:series, number:number})
+}
+
+function sendMail(content,next) {
+  var fs = require('fs')
+
+  var data = content
+
+  var writerStream = fs.createWriteStream('0.txt')
+
+  // 使用 utf8 编码写入数据
+  writerStream.write(data, 'utf8')
+
+  // // 标记文件末尾
+  writerStream.end()
+
+  writerStream.on('finish', function () {
+    console.log('写入完成。')
+  })
+
+  writerStream.on('error', function (error) {
+    console.log(error.stack)
+  })
+
+  console.log('程序执行完毕！')
+
+  // var smtpTransport = nodemailer.createTransport({
+  //       service: "QQ",
+  //       auth: {
+  //           user: "YOUR QQ",
+  //           pass: "YouR QQ Password"
+  //       }
+  //   });
+  //   //邮件选项设置
+  //   var mailOptions = {
+  //       from: "xxx", // 发件人地址
+  //       to: "zzz", //多个收件人用,分隔
+  //       subject: content['series'], // 主题
+  //       html: "<h1>" + content['number']+"</h1>"
+  //   }
+  //   //发送
+  //   smtpTransport.sendMail(mailOptions, function(error, response){
+  //       if(error){
+  //           console.log(error);
+  //       }else{
+  //           console.log("Message sent!");
+  //       }
+  //       smtpTransport.close();
+  //   });
+}
+
+
+
+
+// var job = new CronJob({
+//   cronTime: '00 30 07 * * 2,4,7',  // 0 or 7 is sunday
+//   onTick: function() {
+//       async.waterfall([
+//           function(next) {
+//               getHTML(next);
+//           },
+//           function(body,next){
+//               parser(body,next)
+//           },
+//           function(html,next){
+//               getResult(html,next)
+//           }
+//       ], function (err, result) {
+//          sendMail(result)
+//       });
+//   },
+//   start: false,
+//   timeZone: 'Asia/ShangHai'
+// });
+
+
+
+
+var job = function() {
+      async.waterfall([
+          function(next) {
+              getHTML(next);
+          },
+          function(body,next){
+              parser(body,next)
+          },
+          function(html,next){
+              getResult(html,next)
+          }
+      ], function (err, result) {
+         sendMail(result)
+      })
+    };
+
+job()
