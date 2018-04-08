@@ -8,6 +8,7 @@
     "eventproxy": "^0.3.5",
     "express": "^4.14.0",
     "gbk": "^0.1.0",
+    "http": "0.0.0",
     "mongodb": "^2.2.2",
     "request": "^2.79.0",
     "superagent": "^2.1.0"

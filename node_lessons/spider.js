@@ -1,4 +1,4 @@
-var superagent = require('superagent'),
+var superagent = require('superagent')
 cheerio = require('cheerio'),
 express = require('express');
 
