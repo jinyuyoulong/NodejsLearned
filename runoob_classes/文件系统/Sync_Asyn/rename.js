@@ -12,27 +12,34 @@ function fileDisplay(file_path) {
 			console.log(err)
 		}else{
 			files.forEach(function (item) {
-				console.log('name: '+item+'  class type:'+ typeof(item))
+				// console.log('name: '+item+'  class_type:'+ typeof(item))
 				let filedir = path.join(file_path,item)
-				
-				// if (item.indexOf('MarkMan.png') > 0) {
-				// 	// console.log('have '+item)
-				// 	// console.log(path+item)
-				// 	// console.log(path+'MarkMan/'+item)
-				// 	let new_path = item.substr(1, item.length)
-				// 	fs.rename(path+item,path+new_path, function (err) {
-				// 		if (err) {
-				// 			console.log('rename: '+err)
-				// 		}else{
-				// 			console.log('rename complete.')
-				// 		}
-				// 	})
-						
-				// }else{
-				// 	// console.log('have not '+item)
-				// }
+				fs.stat(filedir,rename(error,stats,file_path))
 			})
 		}
 	})
+}
+
+function rename(error,stats,file_path) {
+	if (error) {
+		console.warn('获取文件stats失败')
+	}else{
+		let isFile = stats.isFile();
+		let isDir = stats.isDirectory()
+
+		if (isFile) {
+			// console.log(item)
+			//rename
+			let new_name = item.replace('E','L')
+			console.log('newname: '+new_name)
+			fs.rename(path.join(file_path,item), path.join(file_path,new_name) file_path+new_name, function (err) {
+				if (err) {console.warn('rename err->'+err)}
+					else
+						console.log('rename complete')
+			})
+		}
+
+		if (isDir) {fileDisplay(filedir)}//递归
+	}
 }
 
