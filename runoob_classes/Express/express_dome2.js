@@ -29,10 +29,10 @@ app.get('/list_user', function (req, res) {
 // 对页面 abcd, abxcd, ab123cd, 等响应 GET 请求
 app.get('/ab*cd', function (req, res) {
 	console.log('/ab*cd GET 请求')
-	res.send('正则匹配')
+	res.send('正则匹配 ab*cd')
 })
 
-var server = app.listen(8081, function () {
+var server = app.listen(3000, function () {
 	var host = server.address().address
 	var port = server.address().port
 

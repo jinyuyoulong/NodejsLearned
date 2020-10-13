@@ -17,8 +17,8 @@
   },
   "homepage": "https://github.com/jinyuyoulong/NodejsLearned#readme",
   "dependencies": {
-    "cookie-parser": "^1.4.3",
-    "express": "^4.14.0",
-    "multer": "^1.1.0"
+    "cookie-parser": "1.x",
+    "express": "4.x",
+    "multer": "1.x"
   }
 }

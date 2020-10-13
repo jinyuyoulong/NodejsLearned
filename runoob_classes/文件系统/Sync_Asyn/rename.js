@@ -1,10 +1,11 @@
 let fs = require('fs')
 let path = require('path')
 
-let file_path = path.resolve('../../../../../test/LBasicBusinessComponents/LBasicBusinessComponents/Classes/LQueryModule')
+let file_path = path.resolve('/Users/fanjinlong/dev/ios/Lottery/Lottery/MyClasses')
 
 fileDisplay(file_path)
 
+// ------------------------------------------------
 // 实现遍历方法
 function fileDisplay(file_path) {
 	fs.readdir(file_path, filesForEach)
